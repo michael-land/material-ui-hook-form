@@ -60,7 +60,7 @@ const DEPARTMENT = ['HR', 'accounting', 'shipping'];
 
 // Select with render props
 <Field name="department">
-    {options.map(option=> {
+    {DEPARTMENTS.map(option=> {
         <MenuItem key={option} value={option}>{option}</MenuItem>
     })}
 </Field>
