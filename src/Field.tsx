@@ -20,6 +20,12 @@ interface Field
 }
 
 function Field({
+  xs, //ignored
+  sm, //ignored
+  md, //ignored
+  lg, //ignored
+  xl, //ignored
+
   control: controlProp,
   max,
   min,

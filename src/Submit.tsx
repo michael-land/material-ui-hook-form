@@ -18,9 +18,7 @@ const useStyles = makeStyles({
 
 interface Submit extends ButtonProps {
   control?: Control;
-  disabled?: boolean;
   submitting?: boolean;
-  submittingText?: string;
 }
 
 function Submit({

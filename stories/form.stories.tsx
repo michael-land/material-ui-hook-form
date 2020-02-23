@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Card,
@@ -11,9 +12,7 @@ import {
   TextFieldProps,
   ThemeProvider,
   Toolbar,
-  Box,
   Typography,
-  CardMedia,
 } from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';

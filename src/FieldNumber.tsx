@@ -20,12 +20,17 @@ interface FieldNumber
   control?: Control;
   name: string;
   naked?: boolean;
-  options?: Record<string, any>;
 }
 
 const Format = (props: any) => <NumberFormat {...props} customInput={TextField} />;
 
 function FieldNumber({
+  xs, //ignored
+  sm, //ignored
+  md, //ignored
+  lg, //ignored
+  xl, //ignored
+
   control: controlProp,
   max,
   label,
@@ -36,7 +41,6 @@ function FieldNumber({
   validate,
   helperText,
   naked,
-  options,
   ...other
 }: FieldNumber) {
   const { control, error, rules } = useField({

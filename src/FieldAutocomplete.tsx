@@ -21,6 +21,12 @@ type FieldAutocomplete<T> = Pick<ValidationOptions, 'required' | 'validate'> &
   };
 
 function FieldAutocomplete<T>({
+  xs, //ignored
+  sm, //ignored
+  md, //ignored
+  lg, //ignored
+  xl, //ignored
+
   control: controlProp,
   name,
   required,
