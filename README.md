@@ -18,19 +18,19 @@ You can pass any props from [`TextField`](https://material-ui.com/api/text-field
 
 Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
 
-- `name` : string - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
-- `control`?: Control; - control object is from invoking useForm. it's optional if you are using FormContext.
-- `required`?: string | ValidationOptionObject<boolean>;
-- `min`?: ValidationOptionObject<number | string>;
-- `max`?: ValidationOptionObject<number | string>;
-- `maxLength`?: ValidationOptionObject<number | string>;
-- `minLength`?: ValidationOptionObject<number | string>;
-- `pattern`?: ValidationOptionObject<RegExp>;
-- `validate`?: Validate | Record<string, Validate>;
+- `name: string` - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
+- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
+- `required?: string | ValidationOptionObject<boolean>`
+- `min?: ValidationOptionObject<number | string>`
+- `max?: ValidationOptionObject<number | string>`
+- `maxLength?: ValidationOptionObject<number | string>`
+- `minLength?: ValidationOptionObject<number | string>`
+- `pattern: ValidationOptionObject<RegExp>`
+- `validate?: Validate | Record<string, Validate>`
 
 Addtional props:
 
-- `naked`?: boolean - Hide label and helperText when true
+- `naked?: boolean` - Hide label and helperText when true
 
 ```tsx
 // Text
@@ -76,16 +76,16 @@ You can pass any props from [`React Number Format`](https://github.com/s-yadav/r
 
 Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
 
-- `name` : string - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
-- `control`?: Control; - control object is from invoking useForm. it's optional if you are using FormContext.
-- `required`?: string | ValidationOptionObject<boolean>;
-- `min`?: ValidationOptionObject<number | string>;
-- `max`?: ValidationOptionObject<number | string>;
-- `validate`?: Validate | Record<string, Validate>;
+- `name: string` - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
+- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
+- `required?: string | ValidationOptionObject<boolean>`
+- `min?: ValidationOptionObject<number | string>`
+- `max?: ValidationOptionObject<number | string>`
+- `validate?: Validate | Record<string, Validate>`
 
 Addtional props:
 
-- `naked`?: boolean - Hide label and helperText when true
+- `naked?: boolean` - Hide label and helperText when true
 
 ```tsx
 // Number
@@ -123,14 +123,14 @@ FieldAutocomplete has a default renderInput implementation, which just a TextFie
 
 Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
 
-- `name` : string - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
-- `control`?: Control; - control object is from invoking useForm. it's optional if you are using FormContext.
-- `required`?: string | ValidationOptionObject<boolean>;
-- `validate`?: Validate | Record<string, Validate>;
+- `name: string` - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
+- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
+- `required?: string | ValidationOptionObject<boolean>`
+- `validate?: Validate | Record<string, Validate>`
 
 Addtional props:
 
-- `naked`?: boolean - Hide label and helperText when true
+- `naked?: boolean` - Hide label and helperText when true
 
 ```tsx
 // Autocomplete
@@ -149,17 +149,17 @@ You can pass any props from [`RadioGroup`](https://material-ui.com/api/radio-gro
 
 Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
 
-- `name` : string - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
-- `control`?: Control; - control object is from invoking useForm. it's optional if you are using FormContext.
-- `required`?: string | ValidationOptionObject<boolean>;
+- `name: string` - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
+- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
+- `required?: string | ValidationOptionObject<boolean>`
 
 Addtional props:
 
-- `label`?: string; - Form Label
-- `naked`?: boolean - Hide label and helperText when true
-- `options`: (string | { value: string; label?: string })[]; - self described
-- `helperText`?: string; - @see TextField#helperText
-- `disabled`?: boolean; - @see TextField#disabled
+- `label?: string` - Form Label
+- `naked?: boolean` - Hide label and helperText when true
+- `options: (string | { value: string; label?: string })[]` - self described
+- `helperText?: string` - @see TextField#helperText
+- `disabled?: boolean` - @see TextField#disabled
 
 ```tsx
 // TODO
@@ -171,8 +171,8 @@ You can pass any props from `<form />`.
 
 Additional props:
 
-- `form`?: FormContextValues; - If you pass the form object got from invoking `useForm()`. It will wrap a FormContext for you
-- `debug`?: boolean; - TODO
+- `form?: FormContextValues` - If you pass the form object got from invoking `useForm()`. It will wrap a FormContext for you
+- `debug?: boolean` - TODO
 
 #### Implementation
 
@@ -216,11 +216,11 @@ You can pass any props from [`Button`](https://material-ui.com/api/button) to `S
 
 Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
 
-- `control`?: Control; - control object is from invoking useForm. it's optional if you are using FormContext.
+- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
 
 Addtional props:
 
-- `loading`?: boolean - Disable button and show loading indicator when true, it's optional if you are using FormContext
+- `loading?: boolean` - Disable button and show loading indicator when true, it's optional if you are using FormContext
 
 ```tsx
 const form = useForm();
