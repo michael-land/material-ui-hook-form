@@ -1,12 +1,13 @@
 import React from 'react';
-import { FormContext, FormContextValues } from 'react-hook-form';
+import { FormContext, FormContextValues, FieldValues } from 'react-hook-form';
 
-interface Form extends React.FormHTMLAttributes<HTMLFormElement> {
-  form?: FormContextValues;
+interface Form<FormValues extends FieldValues = FieldValues>
+  extends React.FormHTMLAttributes<HTMLFormElement> {
+  form?: FormContextValues<FormValues>;
   debug?: boolean;
 }
 
-function Form({ form, ...other }: Form) {
+function Form<FormValues extends FieldValues = FieldValues>({ form, ...other }: Form<FormValues>) {
   const component = <form noValidate {...other} />;
   return form ? <FormContext {...form}>{component}</FormContext> : component;
 }

@@ -17,6 +17,7 @@ type FieldAutocomplete<T> = Pick<ValidationOptions, 'required' | 'validate'> &
   Omit<TextFieldProps, 'required' | 'onChange'> & {
     name: string;
     control?: Control;
+    label?: string;
     naked?: boolean;
   };
 
