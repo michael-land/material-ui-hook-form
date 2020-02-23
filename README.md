@@ -2,20 +2,21 @@
 
 A set of wrapper components to facilitate using Material-UI with React Hook Form
 
-Storebook: https://material-ui-hook-form-storybook.now.sh
-Storebook src:
+[Storebook](https://material-ui-hook-form-storybook.now.sh)
+
+[Storebook src](https://github.com/xiaoyu-tamu/material-ui-hook-form/blob/master/stories/form.stories.tsx)
 
 ## Website (TODO)
 
 ## Documentation ( TODO )
 
-#### Field ( Text, Select, TextArea )
+### Field ( Text, Select, TextArea )
 
-This component can be wrapped inside <Fields>
+> This component can use inside `<Fields>`
 
-You can pass any props from [`TextField Docs`](https://material-ui.com/api/text-field) to `Field`.
+You can pass any props from [`TextField`](https://material-ui.com/api/text-field) to `Field`.
 
-Additional props from React Hook Form [`RHF Docs`](https://react-hook-form.com/api#register):
+Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
 
 - `name` : string - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
 - `control`?: Control; - control object is from invoking useForm. it's optional if you are using FormContext.
@@ -57,7 +58,7 @@ const DEPARTMENT = ['HR', 'accounting', 'shipping'];
 // Select
 <Field name="department" options={DEPARTMENTS} />
 
-// Select custom opptions
+// Select with render props
 <Field name="department">
     {options.map(option=> {
         <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -65,11 +66,11 @@ const DEPARTMENT = ['HR', 'accounting', 'shipping'];
 </Field>
 ```
 
-#### FieldNumber ( Currency, Number, FormatNumber, MaskInput, Phone Number, etc )
+### FieldNumber ( Currency, Number, FormatNumber, MaskInput, Phone Number, etc )
 
-This component can be wrapped inside <Fields>
+> This component can use inside `<Fields>`
 
-You can pass any props from [`TextField`](https://material-ui.com/api/text-field) to `FieldNumber` except select, SelectProps.
+You can pass any props from [`TextField`](https://material-ui.com/api/text-field) to `FieldNumber` except `select`, `SelectProps`.
 
 You can pass any props from [`React Number Format`](https://github.com/s-yadav/react-number-format#props)
 
@@ -95,13 +96,13 @@ Addtional props:
 
 ```
 
-#### FieldAutocomplete ( Autocomplete )
+### FieldAutocomplete ( Autocomplete )
 
-This component can be wrapped inside <Fields>
+> This component can use inside `<Fields>`
 
 You can pass any props from [`Autocomplete`](https://material-ui.com/api/autocomplete) to `FieldAutocomplete`.
 
-You can pass any props from [`TextField`](https://material-ui.com/api/autocomplete) to `FieldAutocomplete` except onChange, select, SelectProps.
+You can pass any props from [`TextField`](https://material-ui.com/api/autocomplete) to `FieldAutocomplete` except `onChange`, `select`, `SelectProps`.
 
 FieldAutocomplete has a default renderInput implementation, which just a TextField with error message, All TextField props will forwarded to TextField. You can override renderInput if needed.
 
@@ -142,7 +143,7 @@ Addtional props:
 />
 ```
 
-#### FieldRadioGroup ( RadioGroup )
+### FieldRadioGroup ( RadioGroup )
 
 You can pass any props from [`RadioGroup`](https://material-ui.com/api/radio-group) to `FieldRadioGroup`.
 
@@ -164,15 +165,16 @@ Addtional props:
 // TODO
 ```
 
-#### Form
+### Form
 
 You can pass any props from `<form />`.
 
 Additional props:
-`form`?: FormContextValues; - If you pass the form object got from invoking `useForm()`. It will wrap a FormContext for you
-`debug`?: boolean; - TODO
 
-##### Implementation
+- `form`?: FormContextValues; - If you pass the form object got from invoking `useForm()`. It will wrap a FormContext for you
+- `debug`?: boolean; - TODO
+
+#### Implementation
 
 ```tsx
 interface Form extends React.FormHTMLAttributes<HTMLFormElement> {
@@ -186,11 +188,11 @@ function Form({ form, ...other }: Form) {
 }
 ```
 
-#### Fields
+### Fields
 
-You can pass any props from [`Grid`](https://material-ui.com/api/grid) to `Fields` except 'container' and 'item'.
+You can pass any props from [`Grid`](https://material-ui.com/api/grid) to `Fields` except `container` and `item`.
 
-- All Grid item have xs=12 default value.
+- All Grid item have `xs=12` default value.
 
 ```tsx
 // All field now wrapped with <Grid item xs={12} md={6}/> You can override this by pass breakpoints to individual `Field`
@@ -206,7 +208,7 @@ You can pass any props from [`Grid`](https://material-ui.com/api/grid) to `Field
 </Fields>
 ```
 
-#### Submit
+### Submit
 
 A button with loading indicator and disabled while submitting
 
