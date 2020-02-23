@@ -235,6 +235,49 @@ const form = useForm();
 </Form>;
 ```
 
+## Styling
+
+In order to make your form looks good, you should customize material-ui with your [theme](https://material-ui.com/customization/theming).
+
+Here is the default theme we used in storybook example
+
+```ts
+createMuiTheme({
+  props: {
+    MuiFilledInput: {
+      disableUnderline: true,
+    },
+    MuiTextField: {
+      margin: 'dense',
+      variant: 'filled',
+    },
+    MuiFormHelperText: {
+      variant: 'filled',
+    },
+    MuiInputLabel: {
+      shrink: true,
+      variant: 'filled',
+    },
+    MuiFormControl: {
+      margin: 'dense',
+      variant: 'filled',
+    },
+  },
+  overrides: {
+    MuiFilledInput: {
+      root: {
+        borderRadius: 4,
+      },
+    },
+    MuiFormControl: {
+      marginDense: {
+        marginTop: 0,
+      },
+    },
+  },
+});
+```
+
 ## All thanks goes to:
 
 - [Material-UI](https://material-ui.com/)

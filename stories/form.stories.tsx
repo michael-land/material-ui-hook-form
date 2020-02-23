@@ -168,6 +168,11 @@ const App = React.memo(({ children }) => {
           },
         },
         overrides: {
+          MuiFilledInput: {
+            root: {
+              borderRadius: 4,
+            },
+          },
           MuiFormControl: {
             marginDense: {
               marginTop: 0,
