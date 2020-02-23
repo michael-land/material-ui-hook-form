@@ -6,9 +6,11 @@ A set of wrapper components to facilitate using Material-UI with React Hook Form
 
 [Storebook src](https://github.com/xiaoyu-tamu/material-ui-hook-form/blob/master/stories/form.stories.tsx)
 
-## Website (TODO)
+### TODO
 
-## Documentation ( TODO )
+- Website
+- Improve Docs
+- FormRender, Maybe we can build a tool that can generate fields from config file or GraphQL query/mutation
 
 ### Field ( Text, Select, TextArea )
 
