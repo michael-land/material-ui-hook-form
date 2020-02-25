@@ -14,22 +14,22 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import React from 'react';
-import countries from './data/countries.json';
 import {
   Field,
   FieldAutocomplete,
+  FieldBoolean,
   FieldNumber,
+  FieldRadioGroup,
   Fields,
   Form,
   Submit,
   useForm,
-  FieldBoolean,
-  FieldRadioGroup,
 } from '../src';
+import countries from './data/countries.json';
 
 const defaultValues = {
   firstName: 'Michael',
