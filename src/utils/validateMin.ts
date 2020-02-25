@@ -3,7 +3,7 @@ interface validateMinMaxOption {
   max?: number;
 }
 
-export function validateMin({ min, max }: validateMinMaxOption) {
+export default function validateMin({ min, max }: validateMinMaxOption) {
   if (typeof min === 'undefined') return;
 
   const message = max

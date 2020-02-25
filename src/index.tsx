@@ -4,6 +4,7 @@ export { default as Field } from './Field';
 export { default as FieldAutocomplete } from './FieldAutocomplete';
 export { default as FieldBoolean } from './FieldBoolean';
 export { default as FieldNumber } from './FieldNumber';
+export { default as FieldNumberFormat } from './FieldNumberFormat';
 export { default as FieldRadioGroup } from './FieldRadioGroup';
 export { default as Fields } from './Fields';
 export { default as Form } from './Form';

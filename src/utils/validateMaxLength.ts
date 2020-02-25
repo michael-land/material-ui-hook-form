@@ -3,7 +3,7 @@ interface ValidateLengthOptions {
   maxLength?: number;
 }
 
-export function validateMaxLength({ maxLength, minLength }: ValidateLengthOptions) {
+export default function validateMaxLength({ maxLength, minLength }: ValidateLengthOptions) {
   if (typeof maxLength === 'undefined') return;
 
   const value = maxLength;

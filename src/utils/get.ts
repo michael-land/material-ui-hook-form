@@ -1,5 +1,5 @@
 // TODO: remove this when RHF expose helper functions
-export function get<T>(
+export default function get<T>(
   obj: Record<string, any>,
   path: string | string[],
   defaultValue?: T

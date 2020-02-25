@@ -1,25 +1,32 @@
 import { GridProps } from '@material-ui/core/Grid';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField, { TextFieldProps } from '@material-ui/core/TextField/TextField';
 import Autocomplete, { AutocompleteProps, RenderInputParams } from '@material-ui/lab/Autocomplete';
 import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
+import clsx from 'clsx';
 import React from 'react';
-import { Control, Controller, ValidationOptions } from 'react-hook-form';
-import { SetOptional } from 'type-fest';
+import { Controller, ValidationOptions } from 'react-hook-form';
+import { Except, SetOptional } from 'type-fest';
+import { FieldCommonProps } from './types';
 import useField from './useField';
-import { get } from './utils/get';
-import { getInputLabelFromName } from './utils/getInputLabelFromName';
+import get from './utils/get';
+import getInputLabelFromName from './utils/getInputLabelFromName';
+
+const DEFAULT_OPTIONS: unknown[] = [];
+
+const useStyles = makeStyles({
+  hidden: {
+    display: 'none',
+  },
+});
 
 type FieldAutocomplete<T> = Pick<ValidationOptions, 'required' | 'validate'> &
   SetOptional<AutocompleteProps<T>, 'renderInput'> &
   UseAutocompleteProps<T> &
   Pick<GridProps, Breakpoint> &
-  Omit<TextFieldProps, 'required' | 'onChange'> & {
-    name: string;
-    control?: Control;
-    label?: string;
-    naked?: boolean;
-  };
+  Except<TextFieldProps, 'required' | 'onChange' | 'name'> &
+  FieldCommonProps & {};
 
 function FieldAutocomplete<T>({
   xs, //ignored
@@ -32,10 +39,13 @@ function FieldAutocomplete<T>({
   name,
   required,
   validate,
-  helperText,
+  helperText: helperTextProp,
   label,
   variant,
-  naked,
+  hiddenErrorMessage,
+  hiddenLabel,
+  hidden,
+  className,
 
   // Autocomplete Props
   autoComplete,
@@ -43,7 +53,7 @@ function FieldAutocomplete<T>({
   autoSelect,
   blurOnSelect,
   ChipProps,
-  classes,
+  classes: classesProp,
   clearOnEscape,
   clearText,
   closeIcon,
@@ -91,6 +101,8 @@ function FieldAutocomplete<T>({
   size,
   ...other
 }: FieldAutocomplete<T>) {
+  const classes = useStyles();
+
   const { control, error, rules } = useField({
     name,
     control: controlProp,
@@ -99,17 +111,16 @@ function FieldAutocomplete<T>({
   });
 
   const handleChange = React.useCallback<any>(
-    ([event, value]: [React.ChangeEvent<{}>, any]) => {
-      return onChange ? onChange(event, value) : value;
-    },
+    ([event, value]: [React.ChangeEvent<{}>, any]) => (onChange ? onChange(event, value) : value),
     [onChange]
   );
 
   return (
     <Controller
+      className={clsx(className, { [classes.hidden]: hidden || other.type === 'hidden' })}
       name={name}
       as={Autocomplete}
-      defaultValue={get(control.defaultValuesRef.current, name, null)}
+      defaultValue={get(control.defaultValuesRef.current, name, multiple ? [] : null)}
       onChange={handleChange}
       control={control}
       disabled={disabled}
@@ -119,7 +130,7 @@ function FieldAutocomplete<T>({
       autoSelect={autoSelect}
       blurOnSelect={blurOnSelect}
       ChipProps={ChipProps}
-      classes={classes}
+      classes={classesProp}
       clearOnEscape={clearOnEscape}
       clearText={clearText}
       closeIcon={closeIcon}
@@ -131,7 +142,7 @@ function FieldAutocomplete<T>({
       disableOpenOnFocus={disableOpenOnFocus}
       disablePortal={disablePortal}
       filterOptions={filterOptions}
-      options={options}
+      options={options || DEFAULT_OPTIONS}
       filterSelectedOptions={filterSelectedOptions}
       forcePopupIcon={forcePopupIcon}
       freeSolo={freeSolo}
@@ -167,8 +178,9 @@ function FieldAutocomplete<T>({
           <TextField
             fullWidth
             required={!!required}
-            label={!naked ? label ?? getInputLabelFromName(name) : undefined}
-            helperText={!naked ? error?.message ?? helperText : undefined}
+            hiddenLabel={hiddenLabel}
+            label={hiddenLabel ? undefined : label ?? getInputLabelFromName(name)}
+            helperText={hiddenErrorMessage ? undefined : error?.message || helperTextProp}
             error={!!error}
             variant={variant as any}
             {...params}

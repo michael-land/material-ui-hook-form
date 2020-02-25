@@ -1,18 +1,22 @@
 import { useTheme } from '@material-ui/core';
 import { Control, FieldError, useFormContext, ValidationOptions } from 'react-hook-form';
-import { get } from './utils/get';
-import { getRules } from './utils/getRules';
+import get from './utils/get';
+import getRules from './utils/getRules';
 
 export interface UseFieldOptions extends ValidationOptions {
   name: string;
   control?: Control;
   disabled?: boolean;
+  parse?: (value: string) => string;
+  format?: (value: string) => string;
 }
 
 export default function useField({
   name,
   disabled,
   control: controlProp,
+  parse,
+  format,
   ...validations
 }: UseFieldOptions) {
   const methods = useFormContext();

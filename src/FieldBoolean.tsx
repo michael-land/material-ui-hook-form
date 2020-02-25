@@ -4,9 +4,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import clsx from 'clsx';
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import { Except } from 'type-fest';
+import { FieldCommonProps } from './types';
 import useField from './useField';
-import { getInputLabelFromName } from './utils/getInputLabelFromName';
+import get from './utils/get';
+import getInputLabelFromName from './utils/getInputLabelFromName';
 
 const useStyles = makeStyles({
   negativeMargin: {
@@ -15,17 +18,20 @@ const useStyles = makeStyles({
   helperText: {
     margin: '8px 12px 0',
   },
+  hidden: {
+    display: 'none',
+  },
 });
 
-interface FieldBoolean extends React.InputHTMLAttributes<HTMLElement> {
+interface FieldBoolean
+  extends Except<React.InputHTMLAttributes<HTMLElement>, 'name' | 'type'>,
+    FieldCommonProps {
   switch?: boolean;
-  name: string;
   helperText?: string;
   label?: string;
-  naked?: boolean;
   mode?: any;
   as?: React.ComponentType;
-  control?: Control;
+  hiddenLabel?: boolean;
 }
 
 function FieldBoolean({
@@ -35,9 +41,11 @@ function FieldBoolean({
   name,
   helperText: helperTextProp,
   label,
-  naked,
   mode,
   disabled,
+  hidden,
+  hiddenLabel,
+  hiddenErrorMessage,
   defaultValue,
   required,
   style,
@@ -46,30 +54,31 @@ function FieldBoolean({
 }: FieldBoolean) {
   const classes = useStyles();
   const { control, error } = useField({ name, control: controlProp });
-  const helperText = error?.message ?? helperTextProp;
+  const helperText = hiddenErrorMessage ? undefined : error?.message || helperTextProp;
 
   return (
     <div className={className} style={style}>
       <FormControlLabel
         className={clsx({
-          [classes.negativeMargin]: naked || !label,
+          [classes.negativeMargin]: !label,
+          [classes.hidden]: hidden,
         })}
         disabled={disabled}
-        label={!naked ? label || getInputLabelFromName(name) : null}
+        hidden={hiddenLabel}
+        label={hiddenLabel ? undefined : label ?? getInputLabelFromName(name)}
         control={
           <Controller
-            valueName="checked"
             disabled={disabled}
             as={asProp}
             control={control}
             name={name}
             mode={mode}
-            defaultValue={defaultValue || false}
+            defaultValue={defaultValue ?? get(control.defaultValuesRef.current, name, false)}
             {...other}
           />
         }
       />
-      {!naked && helperText ? (
+      {helperText ? (
         <FormHelperText required={!!required} error={!!error} className={classes.helperText}>
           {helperText}
         </FormHelperText>

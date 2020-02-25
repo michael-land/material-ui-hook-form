@@ -1,3 +1,3 @@
-export function validateRequired() {
+export default function validateRequired() {
   return { value: true, message: 'Required' };
 }

@@ -1,22 +1,29 @@
 import { GridProps } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import { capitalCase } from 'change-case';
+import clsx from 'clsx';
 import React from 'react';
-import { Control, Controller, ValidationOptions } from 'react-hook-form';
+import { Controller, ValidationOptions } from 'react-hook-form';
+import { Except } from 'type-fest';
+import { FieldCommonProps } from './types';
 import useField from './useField';
-import { get } from './utils/get';
-import { getInputLabelFromName } from './utils/getInputLabelFromName';
+import get from './utils/get';
+import getInputLabelFromName from './utils/getInputLabelFromName';
+
+const useStyles = makeStyles({
+  root: {},
+  hidden: { display: 'none' },
+});
 
 interface Field
   extends ValidationOptions,
-    Omit<TextFieldProps, 'required'>,
-    Pick<GridProps, Breakpoint> {
-  control?: Control;
-  name: string;
+    Except<TextFieldProps, 'required' | 'name'>,
+    Pick<GridProps, Breakpoint>,
+    FieldCommonProps {
   options?: string[];
-  naked?: boolean;
 }
 
 function Field({
@@ -25,6 +32,8 @@ function Field({
   md, //ignored
   lg, //ignored
   xl, //ignored
+  hidden,
+  hiddenErrorMessage,
 
   control: controlProp,
   max,
@@ -34,10 +43,10 @@ function Field({
   minLength,
   required,
   pattern,
-  naked,
   disabled,
   validate,
-  helperText,
+  helperText: helperTextProp,
+  className,
   options,
   children,
   label,
@@ -57,17 +66,21 @@ function Field({
     validate,
   });
 
+  const classes = useStyles();
+  const isHidden = hidden || other.type === 'hidden';
+
   return (
     <Controller
       fullWidth
       select={select}
       name={name}
+      className={clsx(className, { [classes.hidden]: isHidden })}
       required={!!required}
-      label={!naked ? label ?? getInputLabelFromName(name) : undefined}
+      label={label ?? getInputLabelFromName(name)}
       defaultValue={get(control.defaultValuesRef.current, name, '')}
       as={TextField}
       error={!!error}
-      helperText={!naked ? error?.message ?? helperText : undefined}
+      helperText={hiddenErrorMessage ? undefined : error?.message || helperTextProp}
       control={control}
       rules={rules}
       children={

@@ -31,11 +31,11 @@ import {
 const defaultValues = {
   firstName: 'Michael',
   lastName: 'Li',
-  lastName1: 'Li',
   age: 100,
   salary: 99999,
   note: `Hello`,
   phone: 'fake-phone-number',
+  developer: true,
 };
 
 const DEPARTMENTS = ['shipping', 'accounting', 'customer service'];
@@ -63,10 +63,16 @@ export const Validation = () => {
           <Field name="department" required options={DEPARTMENTS} />
           <Field name="firstName" maxLength={5} md={6} />
           <Field name="lastName" minLength={3} md={6} />
-          <FieldNumber name="age" max={18} md={4} />
+          <FieldNumber name="age" decimalScale={0} max={18} md={4} />
           <FieldNumber name="salary" min={150000} thousandSeparator prefix="$ " md={4} />
           <Field name="phone" pattern={/^\d+$/} md={4} />
           <Field name="note" validate={validateNote} rows={4} rowsMax={8} multiline />
+          <FieldAutocomplete
+            name="auto"
+            options={[{ target: { id: 1, value: 'a' } }]}
+            getOptionLabel={o => o?.target?.value}
+          />
+          <FieldAutocomplete name="tags" freeSolo multiple options={[]} onChange={values => {}} />
         </Fields>
         <Toolbar disableGutters>
           <Submit />

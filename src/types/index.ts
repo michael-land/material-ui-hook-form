@@ -1,3 +1,5 @@
+import { Control } from 'react-hook-form';
+
 type ValidationOptionObject<Value> =
   | Value
   | {
@@ -25,3 +27,12 @@ export interface ValidateSettings {
     maxLength?: ValidationOptionObject<number | string>;
   }) => ValidationOptionObject<number | string>;
 }
+
+export interface FieldCommonProps {
+  control?: Control;
+  name: string;
+  hiddenErrorMessage?: boolean;
+  hidden?: boolean;
+}
+
+export type FieldMoneyCurrency = 'USD';

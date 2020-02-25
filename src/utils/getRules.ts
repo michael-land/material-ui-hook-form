@@ -1,13 +1,13 @@
 import { ValidationOptions } from 'react-hook-form';
 import { ValidateSettings } from '../types';
-import { validateMax } from './validateMax';
-import { validateMaxLength } from './validateMaxLength';
-import { validateMin } from './validateMin';
-import { validateMinLength } from './validateMinLength';
-import { validatePattern } from './validatePattern';
-import { validateRequired } from './validateRequired';
+import validateMax from './validateMax';
+import validateMaxLength from './validateMaxLength';
+import validateMin from './validateMin';
+import validateMinLength from './validateMinLength';
+import validatePattern from './validatePattern';
+import validateRequired from './validateRequired';
 
-export function getRules(
+export default function getRules(
   { max, min, maxLength, minLength, required, pattern, validate }: ValidationOptions,
   settings: ValidateSettings
 ): ValidationOptions | undefined {

@@ -4,13 +4,16 @@ import { Except } from 'type-fest';
 
 interface Fields extends Except<GridProps, 'container' | 'item'> {}
 
-function Fields({ children, xs, sm, md, lg, xl, ...other }: Fields) {
+function Fields({ children, xs, sm, md, lg, xl, spacing, ...other }: Fields) {
   return (
-    <Grid container {...other}>
+    <Grid container spacing={2} {...other}>
       {React.Children.map(
         children,
         child =>
-          React.isValidElement<any>(child) && (
+          React.isValidElement<any>(child) &&
+          (child.props.hidden || child.props.type === 'hidden' ? (
+            child
+          ) : (
             <Grid
               item
               xs={child.props.xs || xs || 12}
@@ -21,7 +24,7 @@ function Fields({ children, xs, sm, md, lg, xl, ...other }: Fields) {
             >
               {React.cloneElement(child)}
             </Grid>
-          )
+          ))
       )}
     </Grid>
   );
