@@ -10,6 +10,7 @@ A set of wrapper components to facilitate using Material-UI with React Hook Form
 
 - Website
 - Improve Docs
+- Add more examples
 - FormRender, Maybe we can build a tool that can generate fields from config file or GraphQL query/mutation
 
 ### Field ( Text, Select, TextArea )
@@ -56,10 +57,10 @@ Addtional props:
   }
 />;
 
-const DEPARTMENT = ['HR', 'accounting', 'shipping'];
+
 
 // Select
-<Field name="department" options={DEPARTMENTS} />
+<Field name="department" options={['HR', 'accounting', 'shipping']} />
 
 // Select with render props
 <Field name="department">
@@ -97,7 +98,47 @@ Addtional props:
 
 // Currency,  $ 150,000
 <FieldNumber name="salary" min={150000} thousandSeparator prefix="$ " md={4} />
+```
 
+If you need to build advanced Number Format, you can leaveage `<FieldNumberFormat />`
+
+```tsx
+// A Money Format that will store user input as smallest currency unit and display as regular format.
+
+// e.g. $100  => 100000
+
+function CurrencyFormat({ value, onChange, currency = 'USD', ...other }: any) {
+  const [maskValue, setMaskValue] = React.useState(value / 100);
+  React.useEffect(() => setMaskValue(value / 100), [value]);
+
+  return (
+    <NumberFormat
+      value={maskValue}
+      isNumericString
+      thousandSeparator
+      onValueChange={target => {
+        if (target.floatValue) {
+          setMaskValue(target.floatValue);
+          onChange(target.floatValue * 100);
+        }
+      }}
+      customInput={TextField}
+      prefix={getCurrencyPrefix(currency)}
+      decimalScale={getCurrencyDecimalScale(currency)}
+      {...other}
+    />
+  );
+}
+
+interface FieldMoney extends Except<FieldNumberFormat, 'as'> {
+  currency?: CurrencyEnum;
+}
+
+function FieldMoney({ className, ...other }: FieldMoney) {
+  return <FieldNumberFormat {...other} as={CurrencyFormat} className={clsx(className)} />;
+}
+
+export default FieldMoney;
 ```
 
 ### FieldAutocomplete ( Autocomplete )
@@ -253,7 +294,6 @@ createMuiTheme({
     MuiFilledInput: {
       disableUnderline: true,
     },
-
     MuiTextField: {
       margin: 'none',
       size: 'small',
