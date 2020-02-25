@@ -99,7 +99,6 @@ export const Basic = () => {
             options={['Good', 'Bad', 'Average']}
             ChipProps={{ size: 'small', variant: 'outlined' }}
           />
-
           <FieldRadioGroup
             row
             name="fruit"

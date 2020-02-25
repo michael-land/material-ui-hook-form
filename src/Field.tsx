@@ -74,6 +74,7 @@ function Field({
       fullWidth
       select={select}
       name={name}
+      disabled={disabled}
       className={clsx(className, { [classes.hidden]: isHidden })}
       required={!!required}
       label={label ?? getInputLabelFromName(name)}
