@@ -76,7 +76,7 @@ export const Basic = () => {
           <FieldAutocomplete
             name="tags"
             freeSolo
-            // validate={(v: any[]) => v.length > 1 || 'You must select at least two tags'}
+            validate={(v: any[]) => v.length > 1 || 'You must select at least two tags'}
             multiple
             disableCloseOnSelect
             autoHighlight
