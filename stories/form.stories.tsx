@@ -14,19 +14,21 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import React from 'react';
-import countries from './data/countries';
+import countries from './data/countries.json';
 import {
   Field,
   FieldAutocomplete,
-  FieldBoolean,
   FieldNumber,
   Fields,
   Form,
   Submit,
   useForm,
+  FieldBoolean,
+  FieldRadioGroup,
 } from '../src';
 
 const defaultValues = {
@@ -57,9 +59,23 @@ export const Basic = () => {
     []
   );
 
+  const onSubmit = form.handleSubmit(async () => {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  });
+
+  const numberOfErrors = Object.keys(form.errors).length;
   return (
     <Frame>
-      <Form form={form} onSubmit={form.handleSubmit(console.log)}>
+      <Form form={form} onSubmit={onSubmit}>
+        <Box mb={4}>
+          {numberOfErrors > 0 ? (
+            <Alert severity="error">
+              <AlertTitle>There was {numberOfErrors} errors with your submission</AlertTitle>
+              Please fix theme and try agin.
+            </Alert>
+          ) : null}
+        </Box>
+
         <Fields>
           <Field name="department" required options={DEPARTMENTS} />
           <Field name="firstName" maxLength={5} md={6} />
@@ -83,11 +99,24 @@ export const Basic = () => {
             options={['Good', 'Bad', 'Average']}
             ChipProps={{ size: 'small', variant: 'outlined' }}
           />
+
+          <FieldRadioGroup
+            row
+            name="fruit"
+            label="Favorite fruit?"
+            options={[
+              { value: 'apple', label: 'Apple' },
+              { value: 'oranage', label: 'Orange' },
+              { value: 'pear', label: 'Pear' },
+            ]}
+          />
           <Field name="note" validate={validateNote} rows={4} rowsMax={8} multiline />
+          <FieldBoolean name="developer" label="I'm a developer" />
         </Fields>
         <Toolbar disableGutters>
-          <Submit />
+          <Submit disabled={numberOfErrors > 0} />
         </Toolbar>
+
         <Divider />
 
         <Box p={4}>
@@ -121,39 +150,6 @@ export const Basic = () => {
   );
 };
 
-function Complex() {
-  const form = useForm({ defaultValues });
-
-  return (
-    <Frame>
-      <Form
-        form={form}
-        noValidate
-        onSubmit={form.handleSubmit(async () => {
-          await new Promise(resolve => setTimeout(resolve, 2000));
-        })}
-      >
-        <FieldBoolean name="developer" />
-        <Fields md={6}>
-          <Field name="lastName" minLength={3} size="small" />
-          <Field name="lastName1" minLength={3} />
-          <Field name="lastName2" minLength={3} />
-          <Field name="lastName3" minLength={3} />
-          <Field name="lastName" minLength={3} />
-          <Field name="lastName1" minLength={3} />
-          <Field name="lastName2" minLength={3} />
-          <FieldNumber name="age" max={18} />
-
-          <Field name="lastName3" minLength={3} />
-        </Fields>
-        <Toolbar disableGutters>
-          <Submit />
-        </Toolbar>
-      </Form>
-    </Frame>
-  );
-}
-
 const Frame = React.memo(({ children }) => {
   const [dark, setDark] = React.useState<boolean>(false);
   const [variant, setVariant] = React.useState<TextFieldProps['variant']>('filled');
@@ -162,6 +158,7 @@ const Frame = React.memo(({ children }) => {
     () =>
       createMuiTheme({
         palette: {
+          primary: { main: '#1565c0' },
           type: dark ? 'dark' : 'light',
         },
         props: {
