@@ -32,7 +32,8 @@ Additional props from [`React Hook Form`](https://react-hook-form.com/api#regist
 
 Addtional props:
 
-- `naked?: boolean` - Hide label and helperText when true
+- `disableErrorMessage?: boolean` - Hide error message when true
+- `disableLabel?:boolean` - Hide label when true
 
 ```tsx
 // Text
@@ -87,7 +88,8 @@ Additional props from [`React Hook Form`](https://react-hook-form.com/api#regist
 
 Addtional props:
 
-- `naked?: boolean` - Hide label and helperText when true
+- `disableErrorMessage?: boolean` - Hide error message when true
+- `disableLabel?:boolean` - Hide label when true
 
 ```tsx
 // Number
@@ -106,6 +108,18 @@ You can pass any props from [`Autocomplete`](https://material-ui.com/api/autocom
 
 You can pass any props from [`TextField`](https://material-ui.com/api/autocomplete) to `FieldAutocomplete` except `onChange`, `select`, `SelectProps`.
 
+Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
+
+- `name: string` - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
+- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
+- `required?: string | ValidationOptionObject<boolean>`
+- `validate?: Validate | Record<string, Validate>`
+
+Addtional props:
+
+- `disableErrorMessage?: boolean` - Hide error message when true
+- `disableLabel?:boolean` - Hide label when true
+
 FieldAutocomplete has a default renderInput implementation, which just a TextField with error message, All TextField props will forwarded to TextField. You can override renderInput if needed.
 
 ```tsx
@@ -122,17 +136,6 @@ FieldAutocomplete has a default renderInput implementation, which just a TextFie
   />
 );
 ```
-
-Additional props from [`React Hook Form`](https://react-hook-form.com/api#register):
-
-- `name: string` - name is required and unique. Input name also supports dot and bracket syntax, which allows you to easily create nested form fields. [`Read more`](https://react-hook-form.com/api#register)
-- `control?: Control` - control object is from invoking useForm. it's optional if you are using FormContext.
-- `required?: string | ValidationOptionObject<boolean>`
-- `validate?: Validate | Record<string, Validate>`
-
-Addtional props:
-
-- `naked?: boolean` - Hide label and helperText when true
 
 ```tsx
 // Autocomplete
@@ -158,7 +161,7 @@ Additional props from [`React Hook Form`](https://react-hook-form.com/api#regist
 Addtional props:
 
 - `label?: string` - Form Label
-- `naked?: boolean` - Hide label and helperText when true
+- `disableErrorMessage?: boolean` - Hide error message when true
 - `options: (string | { value: string; label?: string })[]` - self described
 - `helperText?: string` - @see TextField#helperText
 - `disabled?: boolean` - @see TextField#disabled
@@ -194,12 +197,13 @@ function Form({ form, ...other }: Form) {
 
 You can pass any props from [`Grid`](https://material-ui.com/api/grid) to `Fields` except `container` and `item`.
 
+- Fields have `spacing=2` default value
 - All Grid item have `xs=12` default value.
 
 ```tsx
 // All field now wrapped with <Grid item xs={12} md={6}/> You can override this by pass breakpoints to individual `Field`
 
-<Fields spacing={2} md={6}>
+<Fields md={6}>
   <Field name="department" md={12} />
   <Field name="firstName" />
   <Field name="lastName" />
@@ -249,8 +253,10 @@ createMuiTheme({
     MuiFilledInput: {
       disableUnderline: true,
     },
+
     MuiTextField: {
-      margin: 'dense',
+      margin: 'none',
+      size: 'small',
       variant: 'filled',
     },
     MuiFormHelperText: {
@@ -261,19 +267,21 @@ createMuiTheme({
       variant: 'filled',
     },
     MuiFormControl: {
-      margin: 'dense',
+      margin: 'none',
       variant: 'filled',
     },
   },
   overrides: {
+    MuiInputBase: {
+      input: {
+        '&$disabled': {
+          cursor: 'not-allowed',
+        },
+      },
+    },
     MuiFilledInput: {
       root: {
         borderRadius: 4,
-      },
-    },
-    MuiFormControl: {
-      marginDense: {
-        marginTop: 0,
       },
     },
   },

@@ -17,6 +17,7 @@ import {
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import React from 'react';
+import countries from './data/countries';
 import {
   Field,
   FieldAutocomplete,
@@ -40,7 +41,7 @@ const defaultValues = {
 
 const DEPARTMENTS = ['shipping', 'accounting', 'customer service'];
 
-export const Validation = () => {
+export const Basic = () => {
   const form = useForm({ defaultValues });
   React.useEffect(() => {
     form.handleSubmit(() => {})();
@@ -57,22 +58,32 @@ export const Validation = () => {
   );
 
   return (
-    <App>
+    <Frame>
       <Form form={form} onSubmit={form.handleSubmit(console.log)}>
-        <Fields spacing={2}>
+        <Fields>
           <Field name="department" required options={DEPARTMENTS} />
           <Field name="firstName" maxLength={5} md={6} />
           <Field name="lastName" minLength={3} md={6} />
           <FieldNumber name="age" decimalScale={0} max={18} md={4} />
           <FieldNumber name="salary" min={150000} thousandSeparator prefix="$ " md={4} />
           <Field name="phone" pattern={/^\d+$/} md={4} />
-          <Field name="note" validate={validateNote} rows={4} rowsMax={8} multiline />
           <FieldAutocomplete
-            name="auto"
-            options={[{ target: { id: 1, value: 'a' } }]}
-            getOptionLabel={o => o?.target?.value}
+            name="country"
+            getOptionLabel={(o: any) => o.label}
+            required
+            options={countries}
           />
-          <FieldAutocomplete name="tags" freeSolo multiple options={[]} onChange={values => {}} />
+          <FieldAutocomplete
+            name="tags"
+            freeSolo
+            // validate={(v: any[]) => v.length > 1 || 'You must select at least two tags'}
+            multiple
+            disableCloseOnSelect
+            autoHighlight
+            options={['Good', 'Bad', 'Average']}
+            ChipProps={{ size: 'small', variant: 'outlined' }}
+          />
+          <Field name="note" validate={validateNote} rows={4} rowsMax={8} multiline />
         </Fields>
         <Toolbar disableGutters>
           <Submit />
@@ -106,15 +117,15 @@ export const Validation = () => {
           </pre>
         </Box>
       </Form>
-    </App>
+    </Frame>
   );
 };
 
-export function Complex() {
+function Complex() {
   const form = useForm({ defaultValues });
 
   return (
-    <App>
+    <Frame>
       <Form
         form={form}
         noValidate
@@ -123,7 +134,7 @@ export function Complex() {
         })}
       >
         <FieldBoolean name="developer" />
-        <Fields spacing={2} md={6}>
+        <Fields md={6}>
           <Field name="lastName" minLength={3} size="small" />
           <Field name="lastName1" minLength={3} />
           <Field name="lastName2" minLength={3} />
@@ -132,21 +143,21 @@ export function Complex() {
           <Field name="lastName1" minLength={3} />
           <Field name="lastName2" minLength={3} />
           <FieldNumber name="age" max={18} />
-          <FieldAutocomplete required name="autocomplete" options={['a', 'b']} />
+
           <Field name="lastName3" minLength={3} />
         </Fields>
         <Toolbar disableGutters>
           <Submit />
         </Toolbar>
       </Form>
-    </App>
+    </Frame>
   );
 }
 
-const App = React.memo(({ children }) => {
+const Frame = React.memo(({ children }) => {
   const [dark, setDark] = React.useState<boolean>(false);
   const [variant, setVariant] = React.useState<TextFieldProps['variant']>('filled');
-  const [margin, setMargin] = React.useState<TextFieldProps['margin']>('dense');
+  const [margin, setMargin] = React.useState<TextFieldProps['margin']>('none');
   const theme = React.useMemo(
     () =>
       createMuiTheme({
@@ -157,7 +168,9 @@ const App = React.memo(({ children }) => {
           MuiFilledInput: {
             disableUnderline: true,
           },
+
           MuiTextField: {
+            size: 'small',
             margin,
             variant,
           },
@@ -174,14 +187,17 @@ const App = React.memo(({ children }) => {
           },
         },
         overrides: {
+          MuiInputBase: {
+            input: {
+              '&$disabled': {
+                cursor: 'not-allowed',
+              },
+            },
+          },
+
           MuiFilledInput: {
             root: {
               borderRadius: 4,
-            },
-          },
-          MuiFormControl: {
-            marginDense: {
-              marginTop: 0,
             },
           },
         },

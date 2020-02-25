@@ -108,6 +108,7 @@ function FieldAutocomplete<T>({
     control: controlProp,
     disabled,
     required,
+    validate,
   });
 
   const handleChange = React.useCallback<any>(
